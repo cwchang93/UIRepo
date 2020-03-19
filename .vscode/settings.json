@@ -1,0 +1,27 @@
+{
+    // "typescript.tsdk": "node_modules\\typescript\\lib",
+    "[javascriptreact]": {
+        "editor.formatOnSave": true
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    // "editor.formatOnSave": true,
+    "prettier/prettier": ["error", {}, {
+        "usePrettierrc": false
+      }],
+    "[typescript]": {
+        "editor.formatOnSave": true
+    },
+    "[typescriptreact]": {
+        "editor.formatOnSave": true
+    },
+    "[scss]": {
+        "editor.formatOnSave": true
+    },
+    "eslint.packageManager": "yarn",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+}
