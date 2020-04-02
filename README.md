@@ -78,3 +78,6 @@ storybook的image問題
 
 ### Hooks CallBack after the state was update: useEffect
 <a href="https://spectrum.chat/react/general/react-hooks-best-way-to-call-a-fn-after-setstate~da2e457d-4d26-4133-8910-44c66c247f7e"> React best Way to call a func after setState</a>
+
+### setTimeout 會改變this指向，因此需要用()=> ?
+如果包在function裡面就不要用()=>

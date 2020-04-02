@@ -1,7 +1,6 @@
 import * as React from "react";
 // import image from "/banner.png";
 import { BannerContainer } from "./style";
-import Img from "./banner.png";
 import { GlobalStyle } from "@style/theme/global_css";
 import cx from "classnames";
 
@@ -29,68 +28,62 @@ interface I_Props {
 }
 
 const Banner = (props: I_Props) => {
-  const [btnText, setBtnText] = React.useState<string>("開關");
-  const [bannerState, setBannerState] = React.useState<string>("closed");
-
   const {
     closeText: btnCloseText,
     openText: btnOpenText,
     class: btnClass
   } = props.button;
 
-  const { openAtStart, autoToggle } = props;
+  const { openAtStart, autoToggle, whenTransition } = props;
 
-  // React.useEffect(() => {
-  //   console.log("2");
-  //   if (bannerState === "opened" || bannerState === "opening") {
-  //     console.log("opened");
-  //     setBtnText(btnOpenText);
-  //   } else if (bannerState === "closed" || bannerState === "closing") {
-  //     console.log("closed");
-  //     setBtnText(btnCloseText);
-  //   }
-  // }, [bannerState]);
+  const initBannerState = openAtStart ? "opened" : "closed";
+  const [btnText, setBtnText] = React.useState<string>(btnOpenText);
+  const [bannerState, setBannerState] = React.useState<string>(initBannerState);
 
-  // 初始化
+  const [transition, setTransition] = React.useState<boolean>(true);
+  const [done, setDone] = React.useState<boolean>(false);
 
-  //
-  const initState = () => {
-    if (openAtStart) {
-      // 開啟狀態
-      console.log("openStart");
-      setBtnText(btnOpenText); // 1. 設定btn出現的文字
-      setBannerState("opened"); // 設定初始狀態
-    } else {
-      // 關閉狀態
-      setBtnText(btnCloseText);
-      setBannerState("closed");
+  const open = () => {
+    setDone(false);
+    setBannerState("opening");
+    setBtnText(btnOpenText);
+    if (transition) {
+      const timer = setInterval(whenTransition, 3000 / 30);
+      setTimeout(function() {
+        setBannerState("opened");
+        clearInterval(timer);
+      }, 3000);
     }
   };
 
-  const toggleBanner = () => {
-    console.log("tgbn");
-    console.log("BNNState", bannerState);
+  const close = () => {
+    setBannerState("closing");
+    setBtnText(btnCloseText);
+
+    if (transition) {
+      const timer = setInterval(whenTransition, 3000 / 30);
+      setTimeout(function() {
+        setDone(true);
+        setBannerState("closed");
+        clearInterval(timer);
+      }, 3000);
+    }
+  };
+
+  const toggle = () => {
     if (bannerState === "opened") {
-      console.log("tgopened");
-      setBannerState("closed");
-      setBtnText(btnCloseText);
+      close();
     } else if (bannerState === "closed") {
-      console.log("tgclosed");
-      setBannerState("opened");
-      setBtnText(btnOpenText);
+      open();
     }
   };
 
+  // init BannerStatus
   React.useEffect(() => {
-    initState();
-    console.log("中間");
-  }, []);
-
-  React.useEffect(() => {
-    console.log("autoEffect");
     if (autoToggle) {
-      console.log("auto");
-      toggleBanner();
+      typeof autoToggle === "number"
+        ? setTimeout(() => toggle(), autoToggle) // setTimeout要用箭頭函式，因為this指向問題
+        : toggle();
     }
   }, []);
 
@@ -98,20 +91,26 @@ const Banner = (props: I_Props) => {
     <BannerContainer>
       <GlobalStyle />
       <div className="sectionWrap">
-        <div className={cx("imgWrap", bannerState)}>
-          <img className={cx("bannerImg", bannerState)} src={`./banner.png`} />
+        <div className={cx("imgWrap", bannerState, { transition: transition })}>
+          <img
+            className={cx(
+              "bannerImg",
+              bannerState,
+              { transition: transition },
+              { transformImg: bannerState === "closed" },
+              { done: done }
+            )}
+            src={`./banner.png`}
+          />
           <button
-            className={cx("btn", bannerState)}
+            className={cx(
+              "btn",
+              bannerState,
+              { btnClass: !!btnClass },
+              { transition: transition }
+            )}
             onClick={() => {
-              if (bannerState === "opened") {
-                console.log("If open");
-                setBannerState("closed");
-                setBtnText(btnCloseText);
-              } else if (bannerState === "closed") {
-                console.log("elseIf close");
-                setBannerState("opened");
-                setBtnText(btnOpenText);
-              }
+              toggle();
             }}
           >
             {btnText}

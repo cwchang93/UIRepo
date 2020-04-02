@@ -4,12 +4,13 @@ import Banner from "@jwele/Banner";
 const IndexPage = () => {
   const bannerProps = {
     openAtStart: true,
-    autoToggle: true,
+    autoToggle: 3000,
     button: {
       closeText: "展開",
       openText: "收合",
-      class: "btnClass"
-    }
+      class: ""
+    },
+    whenTransition: () => console.log("transition")
   };
 
   return (
