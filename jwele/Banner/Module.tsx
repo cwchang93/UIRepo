@@ -34,40 +34,47 @@ const Banner = (props: I_Props) => {
     class: btnClass
   } = props.button;
 
-  const { openAtStart, autoToggle, whenTransition } = props;
+  const { openAtStart, autoToggle, transition, whenTransition } = props;
 
   const initBannerState = openAtStart ? "opened" : "closed";
   const [btnText, setBtnText] = React.useState<string>(btnOpenText);
   const [bannerState, setBannerState] = React.useState<string>(initBannerState);
 
-  const [transition, setTransition] = React.useState<boolean>(true);
   const [done, setDone] = React.useState<boolean>(false);
 
   const open = () => {
-    setDone(false);
-    setBannerState("opening");
     setBtnText(btnOpenText);
     if (transition) {
+      setBannerState("opening");
       const timer = setInterval(whenTransition, 3000 / 30);
       setTimeout(function() {
+        setDone(false);
         setBannerState("opened");
         clearInterval(timer);
       }, 3000);
+      return;
+    } else {
+      setDone(false);
     }
+    setBannerState("opened");
   };
 
   const close = () => {
-    setBannerState("closing");
     setBtnText(btnCloseText);
 
     if (transition) {
+      setBannerState("closing");
       const timer = setInterval(whenTransition, 3000 / 30);
       setTimeout(function() {
         setDone(true);
         setBannerState("closed");
         clearInterval(timer);
       }, 3000);
+      return;
+    } else {
+      setDone(true);
     }
+    setBannerState("closed");
   };
 
   const toggle = () => {

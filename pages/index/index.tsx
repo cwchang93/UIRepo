@@ -10,6 +10,7 @@ const IndexPage = () => {
       openText: "收合",
       class: ""
     },
+    transition: true,
     whenTransition: () => console.log("transition")
   };
 

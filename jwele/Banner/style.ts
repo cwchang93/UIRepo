@@ -42,6 +42,11 @@ export const BannerContainer = styled.div`
         &.done {
           transform: translateY(-300px);
         }
+        &.opened,
+        &.opening {
+          transform: translateY(0);
+          /* top: 300px; */
+        }
       }
       .btn {
         position: absolute;
