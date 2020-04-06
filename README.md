@@ -81,3 +81,10 @@ storybook的image問題
 
 ### setTimeout 會改變this指向，因此需要用()=> ?
 如果包在function裡面就不要用()=>
+
+### Next 改版後 static放在public裡面
+<a href="https://github.com/zeit/next.js/blob/master/errors/static-dir-deprecated.md">static in public </a>
+
+
+### CD
+$ ssh rdadmin@23.100.90.204
