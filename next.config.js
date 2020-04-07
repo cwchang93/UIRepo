@@ -4,8 +4,9 @@ const withSass = require('@zeit/next-sass');
 const withCSS = require("@zeit/next-css");
 const merge = require('webpack-merge')
 const common = require(path.resolve(root, 'config/webpack.commons.js'));
+const withImages = require('next-images')
 
-module.exports = withCSS(withSass({
+module.exports = withImages(withCSS(withSass({
     webpack(config, options) {
         const mergeConfig = merge(config, common);
         mergeConfig.module.rules.push({
@@ -31,4 +32,4 @@ module.exports = withCSS(withSass({
 
         return mergeConfig;
     }
-}));
+})));

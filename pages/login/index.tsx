@@ -40,7 +40,7 @@ const LoginPage = () => {
               className="inputUser"
               onChangeCallback={(e: any) => setAccount(e.target.value)}
             /> */}
-            <input />
+            <input onBlur={() => console.log("blur")} />
           </div>
 
           <div className="inputItemWrap">

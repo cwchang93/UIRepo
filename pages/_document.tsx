@@ -11,6 +11,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.4.4/polyfill.min.js"></script>
+          <script src="/static/load-image.all.min.js"></script>
         </Head>
         <body className="custom_style">
           <Main />
