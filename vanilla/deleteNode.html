@@ -1,38 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <div>
-        hihi
-
+      hihi
     </div>
 
+    <div class="imageSection">
+      <input
+        type="file"
+        accept="image/gif, image/jpeg, image/png"
+        name="image"
+        id="file"
+        style="display: none;"
+      />
+      <p><label for="file" style="cursor: pointer;">Upload Image</label></p>
+    </div>
     <ul>
-        <li>1</li>
-        <li id="dNode">23</li>
-        <li>4</li>
+      <li>1</li>
+      <li id="dNode">23</li>
+      <li>4</li>
     </ul>
+  </body>
 
-
-</body>
-
-<script>
+  <script>
     // window.addEventListener("resize", function() {
     //     console.log('resize')
     //     console.log(window.innerWidth)
     //     if (window.innerWidth < 600) {
-        //         node.parentNode.removeChild(node)
-        //     }
-        // })
-        
-    var node = document.querySelector('#dNode')
-    if (window.innerWidth < 960) {
-            node.parentNode.removeChild(node)
-    }
+    //         node.parentNode.removeChild(node)
+    //     }
+    // })
 
-</script>
+    var node = document.querySelector("#dNode");
+    if (window.innerWidth < 960) {
+      node.parentNode.removeChild(node);
+    }
+  </script>
 </html>
