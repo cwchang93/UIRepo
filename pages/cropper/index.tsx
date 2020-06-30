@@ -3,27 +3,32 @@ import { useState, useCallback } from "react";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 
-// Base64 Image to Canvas with a Crop
-export function image64toCanvasRef(canvasRef, image64, pixelCrop) {
-  const canvas = canvasRef; // document.createElement('canvas');
-  canvas.width = pixelCrop.width;
-  canvas.height = pixelCrop.height;
+function getCroppedImg(image, crop) {
+  console.log("image", image);
+  const canvas = document.createElement("canvas");
+  const scaleX = image.naturalWidth / image.width;
+  const scaleY = image.naturalHeight / image.height;
+  canvas.width = crop.width;
+  canvas.height = crop.height;
   const ctx = canvas.getContext("2d");
-  const image = new Image();
-  image.src = image64;
-  image.onload = function() {
-    ctx.drawImage(
-      image,
-      pixelCrop.x,
-      pixelCrop.y,
-      pixelCrop.width,
-      pixelCrop.height,
-      0,
-      0,
-      pixelCrop.width,
-      pixelCrop.height
-    );
-  };
+
+  ctx.drawImage(
+    image,
+    crop.x * scaleX,
+    crop.y * scaleY,
+    crop.width * scaleX,
+    crop.height * scaleY,
+    0,
+    0,
+    crop.width,
+    crop.height
+  );
+
+  // As Base64 string
+  const base64Image = canvas.toDataURL("image/jpeg");
+
+  console.log("base64Image", base64Image);
+  return base64Image;
 }
 
 const Cropper = () => {
@@ -33,9 +38,11 @@ const Cropper = () => {
     width: 80,
     height: 80,
   });
-  const [zoom, setZoom] = useState(1);
-
   const [src, setSrc] = useState(null);
+
+  const [cropImgBase64, setCropImgBase64] = useState(null);
+
+  const imgInput = React.useRef(null);
 
   const onSelectFile = (e) => {
     const file = e.target.files[0];
@@ -46,16 +53,18 @@ const Cropper = () => {
 
   const onImageLoaded = () => console.log("loaded");
   const onCropChange = (crop) => {
-    console.log("cp", crop);
+    console.log("hichange");
     setCrop(crop);
   };
 
-  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
-    console.log(croppedArea, croppedAreaPixels);
+  const onCropComplete = (crop) => {
+    console.log("completed", crop);
+    console.log("type", typeof crop);
 
-    const canvasRef = this.imagePreviewCanvasRef.current;
-    image64toCanvasRef(canvasRef, src, croppedAreaPixels);
-  }, []);
+    const img = document.querySelector(".ReactCrop__image");
+    console.log("imgInput", imgInput);
+    setCropImgBase64(getCroppedImg(img, crop));
+  };
 
   React.useEffect(() => {
     console.log("hiSrc", src);
@@ -74,11 +83,12 @@ const Cropper = () => {
       </div>
       {src && (
         <ReactCrop
+          className="react_crop"
+          ref={imgInput}
           src={src}
-          // src={"/static/tempsnip.png"}
           crop={crop}
           onImageLoaded={() => onImageLoaded}
-          onComplete={() => onCropComplete}
+          onComplete={(e) => onCropComplete(e)}
           onChange={(e) => onCropChange(e)}
         />
       )}
@@ -86,7 +96,7 @@ const Cropper = () => {
       {/* <button onClick={}>確認</button> */}
 
       <div className="previewWrap">
-        <img src={src} />
+        <img src={cropImgBase64} />
       </div>
     </div>
   );
