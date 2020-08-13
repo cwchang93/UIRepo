@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 
-function getCroppedImg(image, crop) {
+function getCroppedImg(image, crop, fileName) {
   console.log("image", image);
   const canvas = document.createElement("canvas");
   const scaleX = image.naturalWidth / image.width;
@@ -28,7 +28,14 @@ function getCroppedImg(image, crop) {
   const base64Image = canvas.toDataURL("image/jpeg");
 
   console.log("base64Image", base64Image);
-  return base64Image;
+  // return base64Image;
+
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((file) => {
+      file.name = fileName;
+      resolve(file);
+    }, "image/jpeg");
+  });
 }
 
 const Cropper = () => {
@@ -43,6 +50,8 @@ const Cropper = () => {
   const [cropImgBase64, setCropImgBase64] = useState(null);
 
   const imgInput = React.useRef(null);
+
+  const textRef = React.useRef(null);
 
   const onSelectFile = (e) => {
     const file = e.target.files[0];
@@ -63,7 +72,10 @@ const Cropper = () => {
 
     const img = document.querySelector(".ReactCrop__image");
     console.log("imgInput", imgInput);
-    setCropImgBase64(getCroppedImg(img, crop));
+    // setCropImgBase64(getCroppedImg(img, crop));
+    const croppedImg = getCroppedImg(img, crop, "croppedImg");
+
+    console.log("croppedImg", croppedImg);
   };
 
   React.useEffect(() => {
@@ -80,6 +92,17 @@ const Cropper = () => {
             onSelectFile(e);
           }}
         />
+
+        {/* <input
+          className="input"
+          type="text"
+          ref={textRef}
+          onChange={() => {
+            const B = textRef.current.value;
+            const V = parseInt(B, 10) || 0;
+            textRef.current.value = V > 99 ? 99 : V;
+          }}
+        /> */}
       </div>
       {src && (
         <ReactCrop
