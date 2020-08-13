@@ -43,3 +43,4 @@ export const handleScroll = (event) => {
   };
   window.scrollTo(scrollParam);
 };
+
