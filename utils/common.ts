@@ -12,3 +12,35 @@ export const handleInput = (stateData, inputValue: string, type: string) => {
   now[type] = inputValue;
   // setstateData(now);
 };
+
+// 取得url的queryString
+export const getQueryStrValue = (query: string) => {
+  //改用obj
+  const url = window.location.href;
+  const querySplitArr = url.split(`${query}=`);
+  const splittedValue = querySplitArr[1];
+  // tab=contact_us&<other>&
+  let queryValue;
+  const splittedVIndex = splittedValue.indexOf("&");
+  if (splittedVIndex > 0) {
+    queryValue = splittedValue.substring(0, splittedVIndex);
+  } else {
+    queryValue = splittedValue;
+  }
+  console.log("queryValue", queryValue);
+  return queryValue;
+};
+
+export const handleScroll = (event) => {
+  console.log("id", event.target.id);
+  const clickedId = event.target.id;
+  const rec = document.getElementById(`p${clickedId}`).getBoundingClientRect();
+  const rectY = rec.top + window.scrollY;
+  const finalY = rectY - 90;
+  const scrollParam = {
+    top: finalY,
+    behavior: "smooth",
+  };
+  window.scrollTo(scrollParam);
+};
+

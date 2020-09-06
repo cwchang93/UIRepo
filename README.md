@@ -86,5 +86,4 @@ storybook的image問題
 <a href="https://github.com/zeit/next.js/blob/master/errors/static-dir-deprecated.md">static in public </a>
 
 
-### CD
-$ ssh rdadmin@23.100.90.204
+

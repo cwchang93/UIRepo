@@ -1,7 +1,6 @@
 import * as React from "react";
 import { GlobalStyle } from "@style/theme/global_css";
 import { LayoutContainer } from "./style";
-import { Sidebar, BreadCrumb, Avatar } from "@xin-design/xind";
 import XinLogo from "@style/images/xinmedia.svg";
 import Link from "next/link";
 import AvatarLogo from "@style/images/Xinua.png";
@@ -24,13 +23,13 @@ const Layout = (props: I_Props_Layout) => {
       subMenu: [
         {
           title: "基本資料",
-          href: ""
+          href: "",
         },
         {
           title: "登出",
-          href: ""
-        }
-      ]
+          href: "",
+        },
+      ],
     },
     {
       menuName: "會員管理",
@@ -42,8 +41,8 @@ const Layout = (props: I_Props_Layout) => {
             <Link href="/members">
               <a>會員查詢</a>
             </Link>
-          )
-        }
+          ),
+        },
         // {
         //   title: "旅遊金",
         //   href: (
@@ -52,7 +51,7 @@ const Layout = (props: I_Props_Layout) => {
         //     </Link>
         //   )
         // }
-      ]
+      ],
     },
     {
       menuName: "旅遊金管理",
@@ -64,9 +63,9 @@ const Layout = (props: I_Props_Layout) => {
             <Link href="/points/review">
               <a>旅遊金審核</a>
             </Link>
-          )
-        }
-      ]
+          ),
+        },
+      ],
     },
     {
       menuName: "艙等管理",
@@ -78,7 +77,7 @@ const Layout = (props: I_Props_Layout) => {
             <Link href="/classmanage">
               <a>設定艙等</a>
             </Link>
-          )
+          ),
         },
         {
           title: "設定艙等報酬",
@@ -86,7 +85,7 @@ const Layout = (props: I_Props_Layout) => {
             <Link href="/classmanage/classreturn">
               <a>設定艙等報酬</a>
             </Link>
-          )
+          ),
         },
         {
           title: "設定升艙條件",
@@ -94,9 +93,9 @@ const Layout = (props: I_Props_Layout) => {
             <Link href="/classmanage/upgrade">
               <a>設定升艙條件</a>
             </Link>
-          )
-        }
-      ]
+          ),
+        },
+      ],
     },
     {
       menuName: "權限管理",
@@ -108,7 +107,7 @@ const Layout = (props: I_Props_Layout) => {
             <Link href="/auth/group">
               <a>新增/編輯群組</a>
             </Link>
-          )
+          ),
         },
         {
           title: "",
@@ -116,7 +115,7 @@ const Layout = (props: I_Props_Layout) => {
             <Link href="/auth/authsetting">
               <a>權限設定</a>
             </Link>
-          )
+          ),
         },
         {
           title: "成員設定",
@@ -124,14 +123,14 @@ const Layout = (props: I_Props_Layout) => {
             <Link href="/auth/membersetting">
               <a>成員設定</a>
             </Link>
-          )
+          ),
         },
         {
           title: "管理者權限設定",
-          href: ""
-        }
-      ]
-    }
+          href: "",
+        },
+      ],
+    },
   ];
 
   return (
